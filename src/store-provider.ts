@@ -7,13 +7,6 @@ import {isFunction} from './utils/utils';
 export namespace StoreProvider {
     let provider = null;
 
-    export const get = (reducer: Function, initialState?: any,
-        storeEnhancers?: Function[]): Provider => {
-
-        return provider ?
-            provider : provider = createProvider(reducer, initialState, storeEnhancers);
-    };
-
     const createProvider = (reducer: Function, initialState?: any,
         storeEnhancers?: Function[]): Provider => {
 
@@ -22,5 +15,12 @@ export namespace StoreProvider {
         let store = new Store(reduxStore);
 
         return provide(Store, { useValue: store });
+    };
+
+    export const get = (reducer: Function, initialState?: any,
+        storeEnhancers?: Function[]): Provider => {
+
+        return provider ?
+            provider : provider = createProvider(reducer, initialState, storeEnhancers);
     };
 }
