@@ -1,7 +1,7 @@
 {
     "name": "ng2redux",
     "description": "An implementation of Redux for Angular 2",
-    "version": "0.0.2",
+    "version": "0.0.7",
     "scripts": {},
     "keywords": [
         "angular",
@@ -18,9 +18,6 @@
     "main": "ng2redux.js",
     "typings": "./ng2redux.d.ts",
     "homepage": "https://github.com/forforeach/ng2redux",
-    "bin": {
-        "tsc": "./tsc"
-    },
     "devDependencies": {
         "angular2": "^2.0.0-beta.13",
         "es6-promise": "^3.1.2",
