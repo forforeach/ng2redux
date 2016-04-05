@@ -1,7 +1,7 @@
 {
     "name": "ng2redux",
     "description": "An implementation of Redux for Angular 2",
-    "version": "0.0.2",
+    "version": "0.0.1",
     "scripts": {
         "test": "npm run tsc && karma start",
         "test-watch": "npm run tsc && karma start --no-single-run --auto-watch",
@@ -42,6 +42,7 @@
         "redux": "^3.3.1",
         "reflect-metadata": "^0.1.2",
         "rxjs": "^5.0.0-beta.2",
+        "semantic-release": "^4.3.5",
         "systemjs": "^0.19.25",
         "systemjs-builder": "^0.15.14",
         "typescript": "^1.8.9",
