@@ -25,14 +25,14 @@ module.exports = function(config) {
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false, served: true },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false, served: true }, // PhantomJS2 (and possibly others) might require it
 
-            { pattern: 'angular2-redux.js', included: false, watched: true }, // source files
+            { pattern: 'ng2redux.js', included: false, watched: true }, // source files
             { pattern: 'src/**/*.js', included: false, watched: true }, // source files
             { pattern: 'tests/**/*.js', included: false, watched: true }, // test files
 
-            { pattern: 'angular2-redux.js.map', included: false, watched: true }, // source files
+            { pattern: 'ng2redux.js.map', included: false, watched: true }, // source files
             { pattern: 'src/**/*.js.map', included: false, watched: true }, // source files
             { pattern: 'tests/**/*.js.map', included: false, watched: true }, // test files
-            { pattern: 'angular2-redux.ts', included: false, watched: true }, // source files
+            { pattern: 'ng2redux.ts', included: false, watched: true }, // source files
             { pattern: 'src/**/*.ts', included: false, watched: true }, // source files
             { pattern: 'tests/**/*.ts', included: false, watched: true }, // test files
             'karma-test-shim.js'

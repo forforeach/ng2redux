@@ -3,7 +3,7 @@
         "target": "es5",
         "module": "system",
         "moduleResolution": "node",
-        "removeComments": false,
+        "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
@@ -13,7 +13,8 @@
         "noImplicitAny": false,
         "noImplicitUseStrict": true,
         "noImplicitReturns": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "declaration": true
     },
     "exclude": [
         "node_modules",
