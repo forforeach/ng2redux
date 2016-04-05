@@ -1,16 +1,8 @@
 {
     "name": "ng2redux",
     "description": "An implementation of Redux for Angular 2",
-    "version": "0.0.1",
-    "scripts": {
-        "test": "npm run tsc && karma start",
-        "test-watch": "npm run tsc && karma start --no-single-run --auto-watch",
-        "commit": "npm run prepublish && npm test && git-cz",
-        "prepublish": "typings install && npm run tsc && node make.js",
-        "tsc": "./node_modules/.bin/tsc",
-        "semantic-release": "./node_modules/.bin/semantic-release",
-        "release": "npm run semantic-release pre && npm publish && npm run semantic-release post"
-    },
+    "version": "0.0.2",
+    "scripts": {},
     "keywords": [
         "angular",
         "angular2",
