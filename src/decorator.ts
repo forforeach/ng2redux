@@ -27,13 +27,13 @@ export function ReduxApp(config: {
     reducer: Function,
     initialState?: any,
     enhancers?: Array<Function>
-} = { reducer: null, providers: [], enhancers: []}) {
+} = { reducer: null, providers: [], enhancers: [] }) {
     return function(cls) {
         // get current annotations
         let annotations = Reflect.getMetadata('annotations', cls) || [];
         let storeProvider = StoreProvider.get(config.reducer, config.initialState,
             [window['devToolsExtension'] ?
-                window['devToolsExtension']() : f => f, ...config.enhancers]);
+                window['devToolsExtension']() : f => f, ...(config.enhancers || [])]);
         // add redux store provider to providers that were passed initially
         config.providers = [storeProvider, ...(config.providers || [])];
         // create @ComponentMetadata

@@ -14,7 +14,7 @@ System.register("src/decorator", ["angular2/core", "./store-provider"], function
       var annotations = Reflect.getMetadata('annotations', cls) || [];
       var storeProvider = store_provider_1.StoreProvider.get(config.reducer, config.initialState, [window['devToolsExtension'] ? window['devToolsExtension']() : function(f) {
         return f;
-      }].concat(config.enhancers));
+      }].concat((config.enhancers || [])));
       config.providers = [storeProvider].concat((config.providers || []));
       var reduxMetadata = new core_1.ComponentMetadata(config);
       annotations.push(reduxMetadata);
