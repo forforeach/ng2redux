@@ -90,8 +90,9 @@ System.register("src/store", ["./utils/utils"], function(exports_1, context_1) {
     }],
     execute: function() {
       Store = (function() {
-        function Store(store) {
+        function Store(store, zone) {
           this.store = store;
+          this.zone = zone;
         }
         Store.prototype.getReducer = function() {
           return this.store.getReducer();
@@ -113,7 +114,10 @@ System.register("src/store", ["./utils/utils"], function(exports_1, context_1) {
             throw new Error('Expected listener to be a function');
           }
           return this.store.subscribe(function() {
-            return listener(_this.getState());
+            var state = _this.getState();
+            _this.zone.run(function() {
+              return listener(state);
+            });
           });
         };
         ;
@@ -144,8 +148,12 @@ System.register("src/store-provider", ["angular2/core", "redux", "./store"], fun
         var createProvider = function(reducer, initialState, storeEnhancers) {
           var enhancer = storeEnhancers ? redux_1.compose.apply(void 0, storeEnhancers) : null;
           var reduxStore = redux_1.createStore(reducer, initialState, enhancer);
-          var store = new store_1.Store(reduxStore);
-          return core_1.provide(store_1.Store, {useValue: store});
+          return core_1.provide(store_1.Store, {
+            useFactory: function(zone) {
+              return new store_1.Store(reduxStore, zone);
+            },
+            deps: [core_1.NgZone]
+          });
         };
         StoreProvider.get = function(reducer, initialState, storeEnhancers) {
           return provider ? provider : provider = createProvider(reducer, initialState, storeEnhancers);

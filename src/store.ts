@@ -1,10 +1,12 @@
+import {NgZone} from 'angular2/core';
 import {Reducer, createStore, compose, Store as ReduxStore} from 'redux';
 
 import {isFunction} from './utils/utils';
 
 export class Store {
 
-    constructor(private store: ReduxStore) { }
+    constructor(private store: ReduxStore, private zone: NgZone) {
+    }
 
     getReducer(): Reducer {
         return this.store.getReducer();
@@ -23,6 +25,9 @@ export class Store {
         if (!isFunction(listener)) {
             throw new Error('Expected listener to be a function');
         }
-        return this.store.subscribe(() => listener(this.getState()));
+        return this.store.subscribe(() => {
+            let state = this.getState();
+            this.zone.run(() => listener(state));
+        });
     };
 }
