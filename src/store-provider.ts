@@ -18,7 +18,9 @@ export namespace StoreProvider {
         storeEnhancers?: Function[]): Provider => {
 
         let enhancer = storeEnhancers ? compose(...storeEnhancers) : null;
-        let store = createStore(reducer as Reducer, initialState, enhancer);
+        let reduxStore = createStore(reducer as Reducer, initialState, enhancer);
+        let store = new Store(reduxStore);
+
         return provide(Store, { useValue: store });
     };
 }
