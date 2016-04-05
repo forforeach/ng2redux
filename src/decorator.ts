@@ -27,7 +27,7 @@ export function ReduxApp(config: {
     reducer: Function,
     initialState?: any,
     enhancers?: Array<Function>
-} = { reducer: null, providers: [] }) {
+} = { reducer: null, providers: [], enhancers: []}) {
     return function(cls) {
         // get current annotations
         let annotations = Reflect.getMetadata('annotations', cls) || [];

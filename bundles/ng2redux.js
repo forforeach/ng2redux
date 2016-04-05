@@ -6,7 +6,8 @@ System.register("src/decorator", ["angular2/core", "./store-provider"], function
     if (config === void 0) {
       config = {
         reducer: null,
-        providers: []
+        providers: [],
+        enhancers: []
       };
     }
     return function(cls) {
