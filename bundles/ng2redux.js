@@ -140,14 +140,14 @@ System.register("src/store-provider", ["angular2/core", "redux", "./store"], fun
     execute: function() {
       (function(StoreProvider) {
         var provider = null;
-        StoreProvider.get = function(reducer, initialState, storeEnhancers) {
-          return provider ? provider : provider = createProvider(reducer, initialState, storeEnhancers);
-        };
         var createProvider = function(reducer, initialState, storeEnhancers) {
           var enhancer = storeEnhancers ? redux_1.compose.apply(void 0, storeEnhancers) : null;
           var reduxStore = redux_1.createStore(reducer, initialState, enhancer);
           var store = new store_1.Store(reduxStore);
           return core_1.provide(store_1.Store, {useValue: store});
+        };
+        StoreProvider.get = function(reducer, initialState, storeEnhancers) {
+          return provider ? provider : provider = createProvider(reducer, initialState, storeEnhancers);
         };
       })(StoreProvider = StoreProvider || (StoreProvider = {}));
       exports_1("StoreProvider", StoreProvider);
