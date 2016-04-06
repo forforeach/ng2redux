@@ -27,7 +27,7 @@ Now you can inject `Store` into your components, as usual service. `Store` wraps
 import {ReduxApp, Store, Container} from 'ng2redux';
 import {reducer} from './reducers'; // your own reducer implementation
 
-@Redux({
+@ReduxApp({
     selector: 'app',
     template: `
         <h1>Hello!</h1>
