@@ -1,7 +1,7 @@
 {
     "name": "ng2redux",
     "description": "An implementation of Redux for Angular 2",
-    "version": "0.0.13",
+    "version": "0.1.0",
     "scripts": {
         "test": "npm run tsc && karma start",
         "test-watch": "npm run tsc && karma start --no-single-run --auto-watch",

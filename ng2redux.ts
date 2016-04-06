@@ -1,4 +1,4 @@
 export * from './src/decorator';
-export * from './src/store';
-export * from './src/store-provider';
+export {Store} from './src/store';
+export * from './src/provider';
 export * from './src/container';

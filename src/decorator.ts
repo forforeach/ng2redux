@@ -1,8 +1,8 @@
 /// <reference path="../node_modules/reflect-metadata/reflect-metadata.d.ts"/>
 import {provide, ChangeDetectionStrategy, Type,
     ViewEncapsulation, ComponentMetadata} from 'angular2/core';
-
-import {StoreProvider} from './store-provider';
+import {getAppStore} from './store';
+import {createProvider} from './provider';
 
 export function ReduxApp(config: {
     selector?: string,
@@ -31,9 +31,10 @@ export function ReduxApp(config: {
     return function(cls) {
         // get current annotations
         let annotations = Reflect.getMetadata('annotations', cls) || [];
-        let storeProvider = StoreProvider.get(config.reducer, config.initialState,
+        let store = getAppStore(config.reducer, config.initialState,
             [window['devToolsExtension'] ?
                 window['devToolsExtension']() : f => f, ...(config.enhancers || [])]);
+        let storeProvider = createProvider(store);
         // add redux store provider to providers that were passed initially
         config.providers = [storeProvider, ...(config.providers || [])];
         // create @ComponentMetadata

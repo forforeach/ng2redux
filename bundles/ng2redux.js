@@ -1,7 +1,8 @@
-System.register("src/decorator", ["angular2/core", "./store-provider"], function(exports_1, context_1) {
+System.register("src/decorator", ["angular2/core", "./store", "./provider"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
   var core_1,
-      store_provider_1;
+      store_1,
+      provider_1;
   function ReduxApp(config) {
     if (config === void 0) {
       config = {
@@ -12,9 +13,10 @@ System.register("src/decorator", ["angular2/core", "./store-provider"], function
     }
     return function(cls) {
       var annotations = Reflect.getMetadata('annotations', cls) || [];
-      var storeProvider = store_provider_1.StoreProvider.get(config.reducer, config.initialState, [window['devToolsExtension'] ? window['devToolsExtension']() : function(f) {
+      var store = store_1.getAppStore(config.reducer, config.initialState, [window['devToolsExtension'] ? window['devToolsExtension']() : function(f) {
         return f;
       }].concat((config.enhancers || [])));
+      var storeProvider = provider_1.createProvider(store);
       config.providers = [storeProvider].concat((config.providers || []));
       var reduxMetadata = new core_1.ComponentMetadata(config);
       annotations.push(reduxMetadata);
@@ -26,8 +28,10 @@ System.register("src/decorator", ["angular2/core", "./store-provider"], function
   return {
     setters: [function(core_1_1) {
       core_1 = core_1_1;
-    }, function(store_provider_1_1) {
-      store_provider_1 = store_provider_1_1;
+    }, function(store_1_1) {
+      store_1 = store_1_1;
+    }, function(provider_1_1) {
+      provider_1 = provider_1_1;
     }],
     execute: function() {}
   };
@@ -80,15 +84,31 @@ System.register("src/utils/utils", [], function(exports_1, context_1) {
   };
 });
 
-System.register("src/store", ["./utils/utils"], function(exports_1, context_1) {
+System.register("src/store", ["redux", "./utils/utils"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
-  var utils_1;
-  var Store;
+  var redux_1,
+      utils_1;
+  var store,
+      createStoreWithEnhancersArray,
+      getAppStore,
+      Store;
   return {
-    setters: [function(utils_1_1) {
+    setters: [function(redux_1_1) {
+      redux_1 = redux_1_1;
+    }, function(utils_1_1) {
       utils_1 = utils_1_1;
     }],
     execute: function() {
+      createStoreWithEnhancersArray = function(reducer, initialState, storeEnhancers) {
+        var enhancer = storeEnhancers ? redux_1.compose.apply(void 0, storeEnhancers) : null;
+        return redux_1.createStore(reducer, initialState, enhancer);
+      };
+      exports_1("getAppStore", getAppStore = function(reducer, initialState, storeEnhancers) {
+        if (!store) {
+          store = createStoreWithEnhancersArray(reducer, initialState, storeEnhancers);
+        }
+        return store;
+      });
       Store = (function() {
         function Store(store, zone) {
           this.store = store;
@@ -125,38 +145,26 @@ System.register("src/store", ["./utils/utils"], function(exports_1, context_1) {
   };
 });
 
-System.register("src/store-provider", ["angular2/core", "redux", "./store"], function(exports_1, context_1) {
+System.register("src/provider", ["angular2/core", "./store"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
   var core_1,
-      redux_1,
       store_1;
-  var StoreProvider;
+  var createProvider;
   return {
     setters: [function(core_1_1) {
       core_1 = core_1_1;
-    }, function(redux_1_1) {
-      redux_1 = redux_1_1;
     }, function(store_1_1) {
       store_1 = store_1_1;
     }],
     execute: function() {
-      (function(StoreProvider) {
-        var provider = null;
-        var createProvider = function(reducer, initialState, storeEnhancers) {
-          var enhancer = storeEnhancers ? redux_1.compose.apply(void 0, storeEnhancers) : null;
-          var reduxStore = redux_1.createStore(reducer, initialState, enhancer);
-          return core_1.provide(store_1.Store, {
-            useFactory: function(zone) {
-              return new store_1.Store(reduxStore, zone);
-            },
-            deps: [core_1.NgZone]
-          });
-        };
-        StoreProvider.get = function(reducer, initialState, storeEnhancers) {
-          return provider ? provider : provider = createProvider(reducer, initialState, storeEnhancers);
-        };
-      })(StoreProvider = StoreProvider || (StoreProvider = {}));
-      exports_1("StoreProvider", StoreProvider);
+      exports_1("createProvider", createProvider = function(store) {
+        return core_1.provide(store_1.Store, {
+          useFactory: function(zone) {
+            return new store_1.Store(store, zone);
+          },
+          deps: [core_1.NgZone]
+        });
+      });
     }
   };
 });
@@ -181,12 +189,13 @@ System.register("src/container", [], function(exports_1, context_1) {
   };
 });
 
-System.register("ng2redux", ["./src/decorator", "./src/store", "./src/store-provider", "./src/container"], function(exports_1, context_1) {
+System.register("ng2redux", ["./src/decorator", "./src/store", "./src/provider", "./src/container"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
+  var exportedNames_1 = {'Store': true};
   function exportStar_1(m) {
     var exports = {};
     for (var n in m) {
-      if (n !== "default")
+      if (n !== "default" && !exportedNames_1.hasOwnProperty(n))
         exports[n] = m[n];
     }
     exports_1(exports);
@@ -195,9 +204,9 @@ System.register("ng2redux", ["./src/decorator", "./src/store", "./src/store-prov
     setters: [function(decorator_1_1) {
       exportStar_1(decorator_1_1);
     }, function(store_1_1) {
-      exportStar_1(store_1_1);
-    }, function(store_provider_1_1) {
-      exportStar_1(store_provider_1_1);
+      exports_1({"Store": store_1_1["Store"]});
+    }, function(provider_1_1) {
+      exportStar_1(provider_1_1);
     }, function(container_1_1) {
       exportStar_1(container_1_1);
     }],

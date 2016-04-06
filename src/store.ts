@@ -3,6 +3,23 @@ import {Reducer, createStore, compose, Store as ReduxStore} from 'redux';
 
 import {isFunction} from './utils/utils';
 
+
+let store: ReduxStore;
+const createStoreWithEnhancersArray = (reducer: Function, initialState?: any,
+    storeEnhancers?: Function[]): ReduxStore => {
+
+    let enhancer = storeEnhancers ? compose(...storeEnhancers) : null;
+    return createStore(reducer as Reducer, initialState, enhancer);
+};
+export const getAppStore = (reducer: Function, initialState?: any,
+    storeEnhancers?: Function[]): ReduxStore => {
+
+    if (!store) {
+        store = createStoreWithEnhancersArray(reducer, initialState, storeEnhancers);
+    }
+    return store;
+};
+
 export class Store {
 
     constructor(private store: ReduxStore, private zone: NgZone) { }
