@@ -12,12 +12,12 @@ export namespace StoreProvider {
 
         let enhancer = storeEnhancers ? compose(...storeEnhancers) : null;
         let reduxStore = createStore(reducer as Reducer, initialState, enhancer);
-        //let store = new Store(reduxStore);
 
-        return provide(Store, { useFactory: (zone) => {
-            return new Store(reduxStore, zone);
-        },
-        deps: [NgZone]
+        return provide(Store, {
+            useFactory: (zone) => {
+                return new Store(reduxStore, zone);
+            },
+            deps: [NgZone]
         });
     };
 
