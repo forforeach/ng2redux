@@ -1,10 +1,5 @@
-export const isBoolean = val => typeof val === 'boolean';
-export const isString = val => typeof val === 'string';
-export const isNumber = val => typeof val === 'number';
 export const isFunction = val => typeof val === 'function';
 export const isDefined = val => typeof val !== 'undefined';
-export const isUndefined = val => typeof val === 'undefined';
+export const isUndefined = val => !isDefined(val);
 export const isBlank = val => val === undefined || val === null;
 export const isObject = val => typeof val === 'object';
-export const isArray = Array.isArray;
-export const isTrueProperty = val => typeof val !== 'undefined' && val !== 'false';

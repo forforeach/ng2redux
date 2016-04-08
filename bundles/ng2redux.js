@@ -1,4 +1,4 @@
-System.register("src/decorator", ["angular2/core", "./store", "./provider"], function(exports_1, context_1) {
+System.register("src/decorators/redux-app.decorator", ["angular2/core", "./../store", "./../provider"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
   var core_1,
       store_1,
@@ -12,10 +12,10 @@ System.register("src/decorator", ["angular2/core", "./store", "./provider"], fun
       };
     }
     return function(cls) {
-      var annotations = Reflect.getMetadata('annotations', cls) || [];
       var store = store_1.getAppStore(config.reducer, config.initialState, [window['devToolsExtension'] ? window['devToolsExtension']() : function(f) {
         return f;
       }].concat((config.enhancers || [])));
+      var annotations = Reflect.getMetadata('annotations', cls) || [];
       var storeProvider = provider_1.createProvider(store);
       config.providers = [storeProvider].concat((config.providers || []));
       var reduxMetadata = new core_1.ComponentMetadata(config);
@@ -37,30 +37,123 @@ System.register("src/decorator", ["angular2/core", "./store", "./provider"], fun
   };
 });
 
+System.registerDynamic("src/utils/object.assign", [], false, function($__require, $__exports, $__module) {
+  var _retrieveGlobal = System.get("@@global-helpers").prepareGlobal($__module.id, null, null);
+  (function() {
+    if (typeof Object['assign'] !== 'function') {
+      (function() {
+        Object['assign'] = function(target) {
+          'use strict';
+          if (target === undefined || target === null) {
+            throw new TypeError('Cannot convert undefined or null to object');
+          }
+          var output = Object(target);
+          for (var index = 1; index < arguments.length; index++) {
+            var source = arguments[index];
+            if (source !== undefined && source !== null) {
+              for (var nextKey in source) {
+                if (source.hasOwnProperty(nextKey)) {
+                  output[nextKey] = source[nextKey];
+                }
+              }
+            }
+          }
+          return output;
+        };
+      })();
+    }
+  })();
+  return _retrieveGlobal();
+});
+
+System.register("src/decorators/connect.decorator", ["./../store", "./../utils/utils", "./../utils/object.assign"], function(exports_1, context_1) {
+  var __moduleName = context_1 && context_1.id;
+  var store_1,
+      utils_1;
+  var wrapDispatchMappings;
+  function Connect(mappings) {
+    return function(baseConstructor) {
+      var mapToEmpty = function() {
+        return ({});
+      };
+      var mapStateToProps = mappings.mapStateToProps || mapToEmpty;
+      var mapDispatchToProps = mappings.mapDispatchToProps || mapToEmpty;
+      if (baseConstructor.length > 19) {
+        throw new Error("Cannot connect '" + baseConstructor.name + "' to Redux because\n            it has more than 19 dependencies");
+      }
+      var ReduxContainer = function(d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19) {
+        var _this = this;
+        var args = Array.apply(null, arguments).filter(function(x) {
+          return x;
+        });
+        var ret = baseConstructor.apply(this, args);
+        this.__extends = baseConstructor.name;
+        var store = this.__store = args[args.length - 1];
+        Object['assign'](this, mapStateToProps(store.getState()));
+        this.__unsubscribe = store.subscribe(function() {
+          var newState = store.getState();
+          Object['assign'](_this, mapStateToProps(newState));
+        });
+        return ret;
+      };
+      ReduxContainer.prototype = baseConstructor.prototype;
+      var finalDispatchmappings = wrapDispatchMappings(mapDispatchToProps());
+      Object['assign'](ReduxContainer.prototype, finalDispatchmappings);
+      var baseNgOnDestroy = ReduxContainer.prototype.ngOnDestroy;
+      ReduxContainer.prototype.ngOnDestroy = function() {
+        if (utils_1.isFunction(baseNgOnDestroy)) {
+          baseNgOnDestroy.apply(this);
+        }
+        if (utils_1.isFunction(this.__unsubscribe)) {
+          this.__unsubscribe();
+        }
+      };
+      Reflect.getMetadataKeys(baseConstructor).forEach(function(key) {
+        var metadata = Reflect.getMetadata(key, baseConstructor);
+        if (key === 'design:paramtypes') {
+          metadata = metadata || [];
+          metadata.push(store_1.Store);
+        }
+        Reflect.defineMetadata(key, metadata, ReduxContainer);
+      });
+      return ReduxContainer;
+    };
+  }
+  exports_1("Connect", Connect);
+  return {
+    setters: [function(store_1_1) {
+      store_1 = store_1_1;
+    }, function(utils_1_1) {
+      utils_1 = utils_1_1;
+    }, function(_1) {}],
+    execute: function() {
+      wrapDispatchMappings = function(dispatchMappings) {
+        return Object.keys(dispatchMappings).reduce(function(state, key) {
+          state[key] = function() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+              args[_i - 0] = arguments[_i];
+            }
+            args.push(this.__store.dispatch);
+            dispatchMappings[key].apply(this, args);
+          };
+          return state;
+        }, {});
+      };
+    }
+  };
+});
+
 System.register("src/utils/utils", [], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
-  var isBoolean,
-      isString,
-      isNumber,
-      isFunction,
+  var isFunction,
       isDefined,
       isUndefined,
       isBlank,
-      isObject,
-      isArray,
-      isTrueProperty;
+      isObject;
   return {
     setters: [],
     execute: function() {
-      exports_1("isBoolean", isBoolean = function(val) {
-        return typeof val === 'boolean';
-      });
-      exports_1("isString", isString = function(val) {
-        return typeof val === 'string';
-      });
-      exports_1("isNumber", isNumber = function(val) {
-        return typeof val === 'number';
-      });
       exports_1("isFunction", isFunction = function(val) {
         return typeof val === 'function';
       });
@@ -68,17 +161,13 @@ System.register("src/utils/utils", [], function(exports_1, context_1) {
         return typeof val !== 'undefined';
       });
       exports_1("isUndefined", isUndefined = function(val) {
-        return typeof val === 'undefined';
+        return !isDefined(val);
       });
       exports_1("isBlank", isBlank = function(val) {
         return val === undefined || val === null;
       });
       exports_1("isObject", isObject = function(val) {
         return typeof val === 'object';
-      });
-      exports_1("isArray", isArray = Array.isArray);
-      exports_1("isTrueProperty", isTrueProperty = function(val) {
-        return typeof val !== 'undefined' && val !== 'false';
       });
     }
   };
@@ -113,31 +202,29 @@ System.register("src/store", ["redux", "./utils/utils"], function(exports_1, con
         function Store(store, zone) {
           this.store = store;
           this.zone = zone;
-        }
-        Store.prototype.getReducer = function() {
-          return this.store.getReducer();
-        };
-        Store.prototype.replaceReducer = function(nextReducer) {
-          this.store.replaceReducer(nextReducer);
-        };
-        Store.prototype.dispatch = function(action) {
-          return this.store.dispatch(action);
-        };
-        Store.prototype.getState = function() {
-          return this.store.getState();
-        };
-        Store.prototype.subscribe = function(listener) {
-          var _this = this;
-          if (!utils_1.isFunction(listener)) {
-            throw new Error('Expected listener to be a function');
-          }
-          return this.store.subscribe(function() {
-            var state = _this.getState();
-            _this.zone.run(function() {
-              return listener(state);
+          this.getReducer = store.getReducer;
+          this.replaceReducer = store.replaceReducer;
+          this.dispatch = store.dispatch;
+          this.getState = store.getState;
+          this.subscribe = function(listener) {
+            if (!utils_1.isFunction(listener)) {
+              throw new Error('Expected listener to be a function');
+            }
+            return store.subscribe(function() {
+              var state = store.getState();
+              zone.run(function() {
+                return listener(state);
+              });
             });
-          });
-        };
+          };
+        }
+        Store.prototype.getReducer = function() {};
+        ;
+        Store.prototype.replaceReducer = function(nextReducer) {};
+        ;
+        Store.prototype.dispatch = function(action) {};
+        Store.prototype.getState = function() {};
+        Store.prototype.subscribe = function(listener) {};
         return Store;
       }());
       exports_1("Store", Store);
@@ -189,22 +276,23 @@ System.register("src/container", [], function(exports_1, context_1) {
   };
 });
 
-System.register("ng2redux", ["./src/decorator", "./src/store", "./src/provider", "./src/container"], function(exports_1, context_1) {
+System.register("ng2redux", ["./src/decorators/redux-app.decorator", "./src/decorators/connect.decorator", "./src/store", "./src/provider", "./src/container"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
-  var exportedNames_1 = {'Store': true};
   function exportStar_1(m) {
     var exports = {};
     for (var n in m) {
-      if (n !== "default" && !exportedNames_1.hasOwnProperty(n))
+      if (n !== "default")
         exports[n] = m[n];
     }
     exports_1(exports);
   }
   return {
-    setters: [function(decorator_1_1) {
-      exportStar_1(decorator_1_1);
+    setters: [function(redux_app_decorator_1_1) {
+      exportStar_1(redux_app_decorator_1_1);
+    }, function(connect_decorator_1_1) {
+      exportStar_1(connect_decorator_1_1);
     }, function(store_1_1) {
-      exports_1({"Store": store_1_1["Store"]});
+      exportStar_1(store_1_1);
     }, function(provider_1_1) {
       exportStar_1(provider_1_1);
     }, function(container_1_1) {

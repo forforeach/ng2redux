@@ -1,49 +1,51 @@
 {
-    "name": "ng2redux",
-    "description": "An implementation of Redux for Angular 2",
-    "version": "0.1.0",
-    "scripts": {
-        "test": "npm run tsc && karma start",
-        "test-watch": "npm run tsc && karma start --no-single-run --auto-watch",
-        "commit": "npm run prepublish && npm test && git-cz",
-        "tsc": "./node_modules/.bin/tsc",
-        "prepublish": "typings install && npm run tsc && node make.js",
-        "release": "semantic-release pre && npm publish && semantic-release post"
-    },
-    "keywords": [
-        "angular",
-        "angular2",
-        "redux",
-        "ng2",
-        "ng2redux"
-    ],
-    "author": "Dima Kuzmich",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/forforeach/ng2redux/issues"
-    },
-    "main": "ng2redux.js",
-    "typings": "./ng2redux.d.ts",
-    "homepage": "https://github.com/forforeach/ng2redux",
-    "devDependencies": {
-        "angular2": "^2.0.0-beta.13",
-        "es6-promise": "^3.1.2",
-        "es6-shim": "^0.35.0",
-        "jasmine-core": "^2.4.1",
-        "karma": "^0.13.22",
-        "karma-chrome-launcher": "^0.2.3",
-        "karma-firefox-launcher": "^0.1.7",
-        "karma-jasmine": "^0.3.8",
-        "karma-typescript-preprocessor": "0.0.21",
-        "npm-run": "^3.0.0",
-        "redux": "^3.3.1",
-        "reflect-metadata": "^0.1.2",
-        "rxjs": "^5.0.0-beta.2",
-        "semantic-release": "^4.3.5",
-        "systemjs": "^0.19.25",
-        "systemjs-builder": "^0.15.14",
-        "typescript": "^1.8.9",
-        "typings": "^0.7.12",
-        "zone.js": "^0.6.8"
-    }
+  "name": "ng2redux",
+  "description": "An implementation of Redux for Angular 2",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "npm run tsc && karma start",
+    "test-watch": "npm run tsc && karma start --no-single-run --auto-watch",
+    "commit": "npm run prepublish && npm test && git-cz",
+    "tsc": "./node_modules/.bin/tsc",
+    "prepublish": "typings install && npm run tsc && node make.js",
+    "release": "semantic-release pre && npm publish && semantic-release post",
+    "clean": "rimraf src/**/*.js src/**/*.js.map src/**/*.d.ts"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "redux",
+    "ng2",
+    "ng2redux"
+  ],
+  "author": "Dima Kuzmich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/forforeach/ng2redux/issues"
+  },
+  "main": "ng2redux.js",
+  "typings": "./ng2redux.d.ts",
+  "homepage": "https://github.com/forforeach/ng2redux",
+  "devDependencies": {
+    "angular2": "^2.0.0-beta.13",
+    "es6-promise": "^3.1.2",
+    "es6-shim": "^0.35.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.8",
+    "karma-typescript-preprocessor": "0.0.21",
+    "npm-run": "^3.0.0",
+    "redux": "^3.3.1",
+    "reflect-metadata": "^0.1.2",
+    "rimraf": "^2.5.2",
+    "rxjs": "^5.0.0-beta.2",
+    "semantic-release": "^4.3.5",
+    "systemjs": "^0.19.25",
+    "systemjs-builder": "^0.15.14",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.12",
+    "zone.js": "^0.6.8"
+  }
 }

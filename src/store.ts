@@ -11,7 +11,8 @@ const createStoreWithEnhancersArray = (reducer: Function, initialState?: any,
     let enhancer = storeEnhancers ? compose(...storeEnhancers) : null;
     return createStore(reducer as Reducer, initialState, enhancer);
 };
-export const getAppStore = (reducer: Function, initialState?: any,
+
+export const getAppStore = (reducer?: Function, initialState?: any,
     storeEnhancers?: Function[]): ReduxStore => {
 
     if (!store) {
@@ -22,35 +23,33 @@ export const getAppStore = (reducer: Function, initialState?: any,
 
 export class Store {
 
-    constructor(private store: ReduxStore, private zone: NgZone) { }
-
-    getReducer(): Reducer {
-        return this.store.getReducer();
+    constructor(private store: ReduxStore, private zone: NgZone) {
+        this.getReducer = store.getReducer;
+        this.replaceReducer = store.replaceReducer;
+        this.dispatch = store.dispatch;
+        this.getState = store.getState;
+        this.subscribe = function(listener: Function) {
+            if (!isFunction(listener)) {
+                throw new Error('Expected listener to be a function');
+            }
+            return store.subscribe(() => {
+                let state = store.getState();
+                // wraps up the listener to run it in current app zone.
+                // it provides an ability to run up with two or more root components
+                // that share one store.
+                // also injects the new state into the listener
+                zone.run(() => listener(state));
+            });
+        };
     }
 
-    replaceReducer(nextReducer: Reducer): void {
-        this.store.replaceReducer(nextReducer);
-    }
+    getReducer(): Reducer | any { };
 
-    dispatch(action: any): any {
-        return this.store.dispatch(action);
-    }
+    replaceReducer(nextReducer: Reducer): void { };
 
-    getState(): any {
-        return this.store.getState();
-    }
+    dispatch(action: any): any { }
 
-    subscribe(listener: Function): Function {
-        if (!isFunction(listener)) {
-            throw new Error('Expected listener to be a function');
-        }
-        return this.store.subscribe(() => {
-            let state = this.getState();
-            // wraps up the listener to run it in current app zone.
-            // it provides an ability to run up with two or more root components
-            // that share one store.
-            // also injects the new state into the listener
-            this.zone.run(() => listener(state));
-        });
-    }
+    getState(): any { }
+
+    subscribe(listener: Function): Function | any { }
 }

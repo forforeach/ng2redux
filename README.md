@@ -34,7 +34,7 @@ import {reducer} from './reducers'; // your own reducer implementation
     `,
     reducer: reducer
 })
-export class AppComponent extends Container {
+export class AppComponent {
     unsubscribe: Function;
     constructor(private store: Store) {
         this.unsubscribe = store.subscribe((state: any) => {
