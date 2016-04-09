@@ -5,7 +5,6 @@
     "test": "npm run clean && npm run tsc && karma start",
     "test-watch": "npm run tsc && karma start --no-single-run --auto-watch",
     "commit": "npm run prepublish && npm test && git-cz",
-    "tsc": "./node_modules/.bin/tsc",
     "prepublish": "typings install && npm run tsc && node make.js",
     "release": "semantic-release pre && npm publish && semantic-release post",
     "clean": "rimraf src/**/*.js src/**/*.js.map src/**/*.d.ts tests/**/*.js tests/**/*.js.map tests/**/*.d.ts",
