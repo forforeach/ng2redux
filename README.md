@@ -1,4 +1,4 @@
-# ng2redux
+# ng2redux [![Build Status](https://travis-ci.org/forforeach/ng2redux.svg?branch=master)](https://travis-ci.org/forforeach/ng2redux) [![npm version](https://img.shields.io/npm/v/ng2redux.svg)](https://www.npmjs.com/package/ng2redux) [![npm](https://img.shields.io/npm/dm/ng2redux.svg)](https://www.npmjs.com/package/ng2redux)
 An Angular2 wrapper for [Redux](http://redux.js.org/)
 
 
