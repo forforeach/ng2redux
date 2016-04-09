@@ -9,7 +9,7 @@ module.exports = function(config) {
             // paths loaded by Karma
             { pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true },
             { pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true },
-            { pattern: 'node_modules/rxjs/bundles/rx.js', included: true, watched: true },
+            { pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true },
             { pattern: 'node_modules/angular2/bundles/angular2.js', included: true, watched: true },
             { pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true },
             { pattern: 'node_modules/redux/dist/redux.js', included: true, watched: true },
