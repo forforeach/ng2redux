@@ -3,6 +3,8 @@ var path = require('path');
 var Builder = require('systemjs-builder');
 var name = pkg.name;
 
+var bundlePath = path.resolve(__dirname, 'bundles/', name);
+
 var builder = new Builder();
 var config = {
     baseURL: '.',
@@ -28,8 +30,14 @@ var config = {
 
 builder.config(config);
 
-builder
-    .bundle(name, path.resolve(__dirname, 'bundles/', name + '.js'))
+Promise.all([
+    builder.bundle(name, bundlePath + '.js'),
+    builder.bundle(name, bundlePath + '.min.js', {
+        minify: true,
+        sourceMaps: true,
+        mangle: false
+    })
+])
     .then(function() {
         console.log('Build complete.');
     })
