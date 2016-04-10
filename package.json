@@ -1,6 +1,7 @@
 {
   "name": "ng2redux",
   "description": "An Angular 2 bindings for Redux",
+  "version": "0.9.4",
   "scripts": {
     "test": "npm run clean && tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
