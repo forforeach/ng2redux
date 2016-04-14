@@ -1,7 +1,7 @@
 {
   "name": "ng2redux",
   "description": "An Angular 2 bindings for Redux",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "scripts": {
     "test": "npm run clean && tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
@@ -35,15 +35,15 @@
   "homepage": "https://github.com/forforeach/ng2redux",
   "peerDependencies": {
     "systemjs": "0.19.25",
-    "angular2": "2.0.0-beta.13",
+    "angular2": "2.0.0-beta.14",
     "es6-shim": "0.35.0",
     "es6-promise": "3.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.8",
+    "zone.js": "0.6.10",
     "redux": "3.3.1"
   },
   "devDependencies": {
-    "angular2": "2.0.0-beta.13",
+    "angular2": "^2.0.0-beta.14",
     "commitizen": "^2.7.6",
     "cz-conventional-changelog": "^1.1.5",
     "es6-promise": "3.1.2",
@@ -65,7 +65,7 @@
     "systemjs-builder": "^0.15.14",
     "typescript": "1.8.9",
     "typings": "^0.7.12",
-    "zone.js": "0.6.8"
+    "zone.js": "^0.6.10"
   },
   "config": {
     "commitizen": {
