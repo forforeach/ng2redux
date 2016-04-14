@@ -1,7 +1,6 @@
 {
   "name": "ng2redux",
   "description": "An Angular 2 bindings for Redux",
-  "version": "0.9.5",
   "scripts": {
     "test": "npm run clean && tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
@@ -39,7 +38,7 @@
     "es6-shim": "0.35.0",
     "es6-promise": "3.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.10",
+    "zone.js": "^0.6.10",
     "redux": "3.3.1"
   },
   "devDependencies": {
