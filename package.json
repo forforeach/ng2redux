@@ -33,12 +33,7 @@
   "typings": "./ng2redux.d.ts",
   "homepage": "https://github.com/forforeach/ng2redux",
   "peerDependencies": {
-    "systemjs": "0.19.25",
     "angular2": "2.0.0-beta.14",
-    "es6-shim": "0.35.0",
-    "es6-promise": "3.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "zone.js": "^0.6.10",
     "redux": "3.3.1"
   },
   "devDependencies": {

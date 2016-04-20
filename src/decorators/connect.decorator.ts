@@ -1,8 +1,8 @@
-/// <reference path="../../node_modules/reflect-metadata/reflect-metadata.d.ts"/>
+declare var Reflect: any;
+
 import {getAppStore, Store} from './../store';
 import {isFunction} from './../utils/utils';
 import './../utils/object.assign';
-
 
 
 const wrapDispatchMappings = (dispatchMappings) => {

@@ -1,4 +1,5 @@
-/// <reference path="../../node_modules/reflect-metadata/reflect-metadata.d.ts"/>
+declare var Reflect: any;
+
 import {provide, ChangeDetectionStrategy, Type,
     ViewEncapsulation, ComponentMetadata} from 'angular2/core';
 import {getAppStore} from './../store';
