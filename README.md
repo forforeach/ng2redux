@@ -23,6 +23,10 @@ This module depends on Angular2 and Redux. You can install them via npm as well:
 npm install --save angular2 redux
 ```
 
+## Example application
+
+Example application that implements simple counter can be found here: [ng2redux simple app](https://github.com/forforeach/ng2redux-simple-starter)
+
 ## Usage
 
 The most simple use case is to import `ReduxApp` decorator and `Store` from ng2redux.
