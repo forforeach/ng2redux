@@ -1,6 +1,4 @@
-import {Injectable, OnDestroy} from 'angular2/core';
-
-import {Store} from './store';
+import {OnDestroy} from 'angular2/core';
 
 export class Container implements OnDestroy {
     unsubscribe: Function = () => { };

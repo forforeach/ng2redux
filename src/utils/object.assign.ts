@@ -1,10 +1,9 @@
 /**
  * IE shim for object assign
  */
-if (typeof Object['assign'] !== 'function') {
-    (function() {
-        Object['assign'] = function(target) {
-            'use strict';
+export default (function () {
+    if (typeof Object['assign'] !== 'function') {
+        Object['assign'] = function (target) {
             if (target === undefined || target === null) {
                 throw new TypeError('Cannot convert undefined or null to object');
             }
@@ -22,5 +21,5 @@ if (typeof Object['assign'] !== 'function') {
             }
             return output;
         };
-    })();
-}
+    }
+})();

@@ -43,7 +43,7 @@ System.import('angular2/src/platform/browser/browser_adapter').then(function(bro
     .then(function() {
         __karma__.start();
     }, function(error) {
-        __karma__.error(error.stack || error);
+        console.error(error.stack || error);
     });
 
 

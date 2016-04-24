@@ -4,7 +4,7 @@
   "scripts": {
     "test": "npm run clean && tsc && karma start",
     "test-watch": "tsc && karma start --no-single-run --auto-watch",
-    "commit": "npm run prepublish && npm test && git-cz",
+    "commit": "npm run prepublish && npm test && git add -A && git-cz",
     "prepublish": "typings install && tsc && node make.js",
     "release": "semantic-release pre && npm publish && semantic-release post",
     "clean": "rimraf src/**/*.js src/**/*.js.map src/**/*.d.ts tests/**/*.js tests/**/*.js.map tests/**/*.d.ts",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "angular2": "2.0.0-beta.14",
-    "commitizen": "^2.7.6",
+    "commitizen": "^2.8.0",
     "cz-conventional-changelog": "^1.1.5",
     "es6-promise": "3.1.2",
     "es6-shim": "0.35.0",

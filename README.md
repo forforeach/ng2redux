@@ -108,7 +108,7 @@ A `Store` reveals the same API as Redux store.
 
 1. [`mapStateToProps(state): stateProps`] (*Function*): The function that describes how to map component's properties to state's properties. On every store update this function will be called with state as a parameter. It should return plain object with a newly mapped properties.
 
-2. [`mapDispatchToProps(): dispatchProps`] *(Function)*: The function that describes how to dispatch a component's events to the store. It should return plain object with the dispatch mappings. Each property of returned object describes one mapping, where key is a name of an event on the component and value is a function that will dispatch an action to a store. The last parameter of this function will always be a dispatch function of the store.
+2. [`mapDispatchToProps(dispatch): dispatchProps`] *(Function)*: The function that describes how to dispatch a component's events to the store. It should return plain object with the dispatch mappings. Each property of returned object describes one mapping, where key is a name of an event on the component and value is a function that will dispatch an action to a store. The function will be given store's `dispatch` function.
 
 #### Example
 
@@ -123,12 +123,12 @@ import {reducer} from './path-to-your-reducer';
     mapStateToProps: function(state) {
         return { counter: state };
     },
-    mapDispatchToProps: function() {
+    mapDispatchToProps: function(dispatch) {
         return {
-            onIncrement: (dispatch) => {
+            onIncrement: () => {
                 dispatch(increment());
             },
-            onDecrement: (dispatch) => {
+            onDecrement: () => {
                 dispatch(decrement());
             }
         };

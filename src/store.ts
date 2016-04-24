@@ -3,32 +3,42 @@ import {Reducer, createStore, compose, Store as ReduxStore} from 'redux';
 
 import {isFunction} from './utils/utils';
 
-
-let store: ReduxStore;
-const createStoreWithEnhancersArray = (reducer: Function, initialState?: any,
+export const createStoreWithEnhancersArray = (reducer: Function, initialState?: any,
     storeEnhancers?: Function[]): ReduxStore => {
 
     let enhancer = storeEnhancers ? compose(...storeEnhancers) : null;
     return createStore(reducer as Reducer, initialState, enhancer);
 };
 
-export const getAppStore = (reducer?: Function, initialState?: any,
-    storeEnhancers?: Function[]): ReduxStore => {
+export interface GetReducer {
+    (): Reducer;
+}
+export interface ReplaceReducer {
+    (nextReducer: Reducer): void;
+}
+export interface Dispatch {
+    (action: any): any;
+}
+export interface GetState {
+    (): any;
+}
+export interface Subscribe {
+    (listener: Function): Function;
+}
 
-    if (!store) {
-        store = createStoreWithEnhancersArray(reducer, initialState, storeEnhancers);
-    }
-    return store;
-};
 
 export class Store {
-
+    getReducer: GetReducer;
+    replaceReducer: ReplaceReducer;
+    dispatch: Dispatch;
+    getState: GetState;
+    subscribe: Subscribe;
     constructor(private store: ReduxStore, private zone: NgZone) {
         this.getReducer = store.getReducer;
         this.replaceReducer = store.replaceReducer;
         this.dispatch = store.dispatch;
         this.getState = store.getState;
-        this.subscribe = function(listener: Function) {
+        this.subscribe = function (listener: Function) {
             if (!isFunction(listener)) {
                 throw new Error('Expected listener to be a function');
             }
@@ -42,14 +52,4 @@ export class Store {
             });
         };
     }
-
-    getReducer(): Reducer | any { };
-
-    replaceReducer(nextReducer: Reducer): void { };
-
-    dispatch(action: any): any { }
-
-    getState(): any { }
-
-    subscribe(listener: Function): Function | any { }
 }
