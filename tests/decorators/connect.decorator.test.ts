@@ -1,11 +1,11 @@
 declare var Reflect: any;
 
-import {Connect} from './../../src/decorators/connect.decorator';
-import {Store} from './../../src/store';
-import {isFunction} from './../../src/utils/utils';
-import {getStoreMock} from './../store.mock';
+import { Connect } from './../../src/decorators/connect.decorator';
+import { Store } from './../../src/store';
+import { isFunction } from './../../src/utils/utils';
+import { getStoreMock } from './../store.mock';
 
-import { it, describe, expect } from 'angular2/testing';
+import { it, describe, expect } from '@angular/core/testing';
 
 describe('Connect', () => {
 

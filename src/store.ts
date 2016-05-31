@@ -1,20 +1,20 @@
-import {NgZone} from 'angular2/core';
-import {Reducer, createStore, compose, Store as ReduxStore} from 'redux';
+import { NgZone } from '@angular/core';
+import { Reducer, createStore, compose, Store as ReduxStore } from 'redux';
 
-import {isFunction} from './utils/utils';
+import { isFunction } from './utils/utils';
 
-export const createStoreWithEnhancersArray = (reducer: Function, initialState?: any,
-    storeEnhancers?: Function[]): ReduxStore => {
+export function createStoreWithEnhancersArray<T>(reducer: Function, initialState?: any,
+    storeEnhancers?: Function[]): ReduxStore<T> {
 
-    let enhancer = storeEnhancers ? compose(...storeEnhancers) : null;
-    return createStore(reducer as Reducer, initialState, enhancer);
-};
-
-export interface GetReducer {
-    (): Reducer;
+    let enhancer = storeEnhancers ? compose.apply(null, storeEnhancers) : null;
+    return createStore(reducer as Reducer<T>, initialState, enhancer);
 }
-export interface ReplaceReducer {
-    (nextReducer: Reducer): void;
+
+export interface GetReducer<T> {
+    (): Reducer<T>;
+}
+export interface ReplaceReducer<T> {
+    (nextReducer: Reducer<T>): void;
 }
 export interface Dispatch {
     (action: any): any;
@@ -27,14 +27,13 @@ export interface Subscribe {
 }
 
 
-export class Store {
-    getReducer: GetReducer;
-    replaceReducer: ReplaceReducer;
+export class Store<T> {
+    getReducer: GetReducer<T>;
+    replaceReducer: ReplaceReducer<T>;
     dispatch: Dispatch;
     getState: GetState;
     subscribe: Subscribe;
-    constructor(private store: ReduxStore, private zone: NgZone) {
-        this.getReducer = store.getReducer;
+    constructor(private store: ReduxStore<T>, private zone: NgZone) {
         this.replaceReducer = store.replaceReducer;
         this.dispatch = store.dispatch;
         this.getState = store.getState;

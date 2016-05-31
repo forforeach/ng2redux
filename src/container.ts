@@ -1,4 +1,4 @@
-import {OnDestroy} from 'angular2/core';
+import { OnDestroy } from '@angular/core';
 
 export class Container implements OnDestroy {
     unsubscribe: Function = () => { };

@@ -1,5 +1,5 @@
-import {isFunction} from './../../src/utils/utils';
-import { it, describe, expect } from 'angular2/testing';
+import { isFunction } from './../../src/utils/utils';
+import { it, describe, expect } from '@angular/core/testing';
 
 describe('utils', () => {
     describe('isFunction', () => {

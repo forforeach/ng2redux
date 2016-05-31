@@ -1,7 +1,7 @@
-import {createProvider} from './../src/provider';
-import {Store} from './../src/store';
-import {provide, Provider, NgZone} from 'angular2/core';
-import { it, describe, expect } from 'angular2/testing';
+import { createProvider } from './../src/provider';
+import { Store } from './../src/store';
+import { provide, Provider, NgZone } from '@angular/core';
+import { it, describe, expect } from '@angular/core/testing';
 
 describe('Provider', () => {
     describe('createProvider', () => {

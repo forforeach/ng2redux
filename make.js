@@ -13,16 +13,16 @@ var config = {
         module: 'cjs'
     },
     map: {
-        typescript: './node_modules/typescript/lib/typescript.js',
-        angular2: path.resolve('node_modules/angular2'),
-        redux: path.resolve('node_modules/redux/lib'),
-        rxjs: path.resolve('node_modules/rxjs')
+        'typescript': './node_modules/typescript/lib/typescript.js',
+        "@angular": path.resolve('node_modules/@angular'),
+        'redux': path.resolve('node_modules/redux/lib'),
+        'rxjs': path.resolve('node_modules/rxjs')
     },
     paths: {
         '*': '*.js'
     },
     meta: {
-        'node_modules/angular2/*': { build: false },
+        'node_modules/@angular/*': { build: false },
         'node_modules/rxjs/*': { build: false },
         'node_modules/redux/*': { build: false }
     },
@@ -38,9 +38,9 @@ Promise.all([
         mangle: false
     })
 ])
-    .then(function() {
+    .then(function () {
         console.log('Build complete.');
     })
-    .catch(function(err) {
+    .catch(function (err) {
         console.log('Error', err);
     });
