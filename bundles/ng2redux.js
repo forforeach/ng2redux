@@ -1,4 +1,4 @@
-System.register("src/decorators/redux-app.decorator", ["angular2/core", "./../store", "./../provider"], function(exports_1, context_1) {
+System.register("src/decorators/redux-app.decorator", ["@angular/core", "./../store", "./../provider"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
   var core_1,
       store_1,
@@ -159,8 +159,12 @@ System.register("src/store", ["redux", "./utils/utils"], function(exports_1, con
   var __moduleName = context_1 && context_1.id;
   var redux_1,
       utils_1;
-  var createStoreWithEnhancersArray,
-      Store;
+  var Store;
+  function createStoreWithEnhancersArray(reducer, initialState, storeEnhancers) {
+    var enhancer = storeEnhancers ? redux_1.compose.apply(null, storeEnhancers) : null;
+    return redux_1.createStore(reducer, initialState, enhancer);
+  }
+  exports_1("createStoreWithEnhancersArray", createStoreWithEnhancersArray);
   return {
     setters: [function(redux_1_1) {
       redux_1 = redux_1_1;
@@ -168,15 +172,11 @@ System.register("src/store", ["redux", "./utils/utils"], function(exports_1, con
       utils_1 = utils_1_1;
     }],
     execute: function() {
-      exports_1("createStoreWithEnhancersArray", createStoreWithEnhancersArray = function(reducer, initialState, storeEnhancers) {
-        var enhancer = storeEnhancers ? redux_1.compose.apply(void 0, storeEnhancers) : null;
-        return redux_1.createStore(reducer, initialState, enhancer);
-      });
+      ;
       Store = (function() {
         function Store(store, zone) {
           this.store = store;
           this.zone = zone;
-          this.getReducer = store.getReducer;
           this.replaceReducer = store.replaceReducer;
           this.dispatch = store.dispatch;
           this.getState = store.getState;
@@ -199,7 +199,7 @@ System.register("src/store", ["redux", "./utils/utils"], function(exports_1, con
   };
 });
 
-System.register("src/provider", ["angular2/core", "./store"], function(exports_1, context_1) {
+System.register("src/provider", ["@angular/core", "./store"], function(exports_1, context_1) {
   var __moduleName = context_1 && context_1.id;
   var core_1,
       store_1;

@@ -1,10 +1,10 @@
 declare var Reflect: any;
 
-import {ReduxApp} from './../../src/decorators/redux-app.decorator';
-import {isFunction} from './../../src/utils/utils';
+import { ReduxApp } from './../../src/decorators/redux-app.decorator';
+import { isFunction } from './../../src/utils/utils';
 
-import {ComponentMetadata} from 'angular2/core';
-import {it, describe, expect} from 'angular2/testing';
+import { ComponentMetadata } from '@angular/core';
+import { it, describe, expect } from '@angular/core/testing';
 
 describe('ReduxApp', () => {
     function TestConstructor() { }

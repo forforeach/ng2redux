@@ -1,7 +1,7 @@
-import {it, describe, expect} from 'angular2/testing';
-import {Store} from './../src/store';
-import {isFunction} from './../src/utils/utils';
-import {getStoreMock} from './store.mock';
+import { it, describe, expect } from '@angular/core/testing';
+import { Store } from './../src/store';
+import { isFunction } from './../src/utils/utils';
+import { getStoreMock } from './store.mock';
 
 describe('Store', () => {
     let zoneMock;

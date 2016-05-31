@@ -32,16 +32,12 @@
   "main": "ng2redux.js",
   "typings": "./ng2redux.d.ts",
   "homepage": "https://github.com/forforeach/ng2redux",
-  "peerDependencies": {
-    "angular2": "2.0.0-beta.14",
-    "redux": "3.3.1"
-  },
   "devDependencies": {
-    "angular2": "2.0.0-beta.14",
+    "@angular/core":  "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
+    "core-js": "^2.4.0",
     "commitizen": "^2.7.6",
     "cz-conventional-changelog": "^1.1.5",
-    "es6-promise": "3.1.2",
-    "es6-shim": "0.35.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
@@ -50,16 +46,16 @@
     "karma-jasmine": "^0.3.8",
     "karma-typescript-preprocessor": "0.0.21",
     "npm-run": "^3.0.0",
-    "redux": "3.3.1",
-    "reflect-metadata": "0.1.2",
+    "redux": "3.5.2",
+    "reflect-metadata": "0.1.3",
     "rimraf": "^2.5.2",
-    "rxjs": "5.0.0-beta.2",
+    "rxjs": "5.0.0-beta.6",
     "semantic-release": "^4.3.5",
-    "systemjs": "0.19.25",
+    "systemjs": "0.19.27",
     "systemjs-builder": "^0.15.14",
     "typescript": "1.8.9",
-    "typings": "^0.7.12",
-    "zone.js": "0.6.10"
+    "typings":"^1.0.4",
+    "zone.js": "0.6.12"
   },
   "config": {
     "commitizen": {

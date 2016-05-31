@@ -1,9 +1,9 @@
 declare var Reflect: any;
 
-import {provide, ChangeDetectionStrategy, Type,
-    ViewEncapsulation, ComponentMetadata} from 'angular2/core';
-import {createStoreWithEnhancersArray} from './../store';
-import {createProvider} from './../provider';
+import { provide, ChangeDetectionStrategy, Type,
+    ViewEncapsulation, ComponentMetadata } from '@angular/core';
+import { createStoreWithEnhancersArray } from './../store';
+import { createProvider } from './../provider';
 
 const getDebugEnhancer = () => window['devToolsExtension'] ? window['devToolsExtension']() : f => f;
 const getEnhancersByDebugMode = (debug, enhancers = []) => {
@@ -30,7 +30,7 @@ export function ReduxApp(config: {
     directives?: Array<Type | any[]>,
     pipes?: Array<Type | any[]>,
     encapsulation?: ViewEncapsulation,
-    reducer: Function,
+    reducer: (state: any, action: any) => any,
     initialState?: any,
     enhancers?: Array<Function>,
     debug?: boolean

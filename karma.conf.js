@@ -1,4 +1,4 @@
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
 
         basePath: '',
@@ -6,12 +6,26 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
 
         files: [
-            // paths loaded by Karma
-            { pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true },
-            { pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true },
-            { pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true },
-            { pattern: 'node_modules/angular2/bundles/angular2.js', included: true, watched: true },
-            { pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true },
+            'node_modules/core-js/client/shim.min.js',
+
+            'node_modules/reflect-metadata/Reflect.js',
+
+            // System.js for module loading
+            'node_modules/systemjs/dist/system-polyfills.js',
+            'node_modules/systemjs/dist/system.src.js',
+
+            // Zone.js dependencies
+            'node_modules/zone.js/dist/zone.js',
+            'node_modules/zone.js/dist/jasmine-patch.js',
+            'node_modules/zone.js/dist/async-test.js',
+            'node_modules/zone.js/dist/fake-async-test.js',
+
+            // RxJs.
+            { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+            { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+
+            { pattern: 'node_modules/@angular/**/*.js', included: false, watched: true },
+            { pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: true },
             { pattern: 'node_modules/redux/dist/redux.js', included: true, watched: true },
 
             { pattern: 'karma-test-shim.js', included: true, watched: true },
@@ -32,7 +46,8 @@ module.exports = function(config) {
         proxies: {
             // required for component assests fetched by Angular's compiler
             "/src/": "/base/src/",
-            "/tests/": "/base/tests/"
+            "/tests/": "/base/tests/",
+            "/node_modules/": "/base/node_modules/"
         },
         preprocessors: {
             'src/**/!(*test).js': ['coverage']
@@ -40,8 +55,8 @@ module.exports = function(config) {
         reporters: ['progress', 'coverage'],
         // optionally, configure the reporter
         coverageReporter: {
-            type : 'html',
-            dir : 'coverage/'
+            type: 'html',
+            dir: 'coverage/'
         },
         port: 9876,
         colors: true,

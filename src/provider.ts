@@ -1,6 +1,6 @@
-import {provide, Provider, NgZone} from 'angular2/core';
+ import { provide, Provider, NgZone } from '@angular/core';
 
-import {Store} from './store';
+import { Store } from './store';
 
 export const createProvider = (store: any): Provider => {
     return provide(Store, {
